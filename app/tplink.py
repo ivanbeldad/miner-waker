@@ -2,9 +2,33 @@ import requests
 import config
 import utils
 import time
+import os.path
 
 
-def get_token():
+def is_valid_token(token):
+    """Check if the token is valid or not."""
+
+    url = config.get()['tplink']['url'] + '?token=' + token
+    response = requests.post(url, json={'method':'getDeviceList'})
+    response_json = response.json()
+    return response_json['error_code'] == 0
+
+
+def save_token(token):
+    file = open(config.get()['token_file'], 'w')
+    file.write(token)
+    file.close()
+
+
+def read_token():
+    if os.path.isfile(config.get()['token_file']):
+        file = open(config.get()['token_file'], 'r')
+        return file.read()
+    else:
+        return None
+
+
+def generate_token():
     """Get token from tplink."""
 
     tplink_cfg = config.get()['tplink']
@@ -23,7 +47,18 @@ def get_token():
     response = requests.post(tplink_cfg['url'], json=body)
     json_response = response.json()
     print 'Token received'
+    save_token(json_response['result']['token'])
     return json_response['result']['token']
+
+
+def get_token():
+    """Get token from tplink."""
+
+    token = read_token()
+    if token and is_valid_token(token):
+        return token
+    else:
+        return generate_token()
 
 
 def get_device_id(name):
