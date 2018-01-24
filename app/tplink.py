@@ -23,7 +23,9 @@ def save_token(token):
 def read_token():
     if os.path.isfile(config.get()['token_file']):
         file = open(config.get()['token_file'], 'r')
-        return file.read()
+        token = file.read()
+        file.close()
+        return token
     else:
         return None
 
