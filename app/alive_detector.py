@@ -10,7 +10,7 @@ def miners_alive():
 
     alive_rigs = [{
         'name': rig,
-        'alive': rigs[rig]['condition'] == 'mining'
+        'alive': rigs[rig]['condition'] == 'mining' or rigs[rig]['condition'] == 'just_booted'
     } for rig in rigs]
 
     return alive_rigs

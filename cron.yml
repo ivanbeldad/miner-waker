@@ -1,7 +1,7 @@
 cron:
 - description: check miners
   url: /check
-  schedule: every 10 mins
+  schedule: every 5 mins
   target: miner-waker
   # retry_parameters:
   #   min_backoff_seconds: 2.5
