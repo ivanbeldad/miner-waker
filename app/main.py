@@ -1,6 +1,8 @@
 import alive_detector
 import tplink
 import webapp2
+from requests_toolbelt.adapters import appengine
+appengine.monkeypatch()
 
 
 class MainPage(webapp2.RequestHandler):
@@ -17,21 +19,25 @@ class Check(webapp2.RequestHandler):
 
         rigs = alive_detector.miners_alive()
 
+        response = ''
+
         for rig in rigs:
             if rig['alive'] is False:
-                print 'Rig ' + rig['name'] + ' is down. Starting reset...'
+                output = 'Rig ' + rig['name'] + ' is down. Starting reset...'
+                response += output + '\n'
+                print output
                 tplink.reset(rig['name'])
 
         print 'Check finished'
 
+        if response == '':
+            response = 'Miners OK'
+
         self.response.headers['Content-Type'] = 'text/plain'
-        self.response.write('Done')
+        self.response.write(response)
 
 
 app = webapp2.WSGIApplication([
-    ('/', MainPage)
-], debug=False)
-
-check = webapp2.WSGIApplication([
+    ('/', MainPage),
     ('/check', Check)
 ], debug=False)

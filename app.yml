@@ -9,4 +9,4 @@ handlers:
 
 - url: /check
   login: admin
-  script: app.main.check
+  script: app.main.app
