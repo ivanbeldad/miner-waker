@@ -1,7 +1,8 @@
 import requests
 import config
 
-def is_alive():
+
+def miners_alive():
     """Check if miners are alive."""
 
     response = requests.get(config.get()['ethos']['api_url'])

@@ -3,6 +3,8 @@ import yaml
 config = False
 
 def get():
+    """Load config.yml"""
+
     global config
     if config is False:
         print 'Loading configuration'
