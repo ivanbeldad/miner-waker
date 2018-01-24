@@ -1,2 +1,5 @@
 requests==2.18
 pyyaml==3.12
+WebOb
+Paste
+webapp2
