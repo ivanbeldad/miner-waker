@@ -2,13 +2,16 @@ import alive_detector
 import tplink
 
 
-print 'Application started...'
+def check():
+    """Check and reset down miners."""
 
-rigs = alive_detector.miners_alive()
+    print 'Check started...'
 
-for rig in rigs:
-    if rig['alive'] is False:
-        print 'Rig ' + rig['name'] + ' is down. Starting reset...'
-        tplink.reset(rig['name'])
+    rigs = alive_detector.miners_alive()
 
-print 'Application finished'
+    for rig in rigs:
+        if rig['alive'] is False:
+            print 'Rig ' + rig['name'] + ' is down. Starting reset...'
+            tplink.reset(rig['name'])
+
+    print 'Check finished'
