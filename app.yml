@@ -1,12 +1,12 @@
 runtime: python27
 api_version: 1
 threadsafe: true
-service: miner-waker
+# service: miner-waker
 
 handlers:
-- url: /.*
-  script: app.main.app
-
 - url: /check
   login: admin
+  script: app.main.app
+
+- url: /.*
   script: app.main.app
